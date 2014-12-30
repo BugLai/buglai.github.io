@@ -119,4 +119,5 @@ buglaideMacBook-Pro:test buglai$ git push -u origin master
 {% endhighlight %}
 
 以上也显示成功了，以上成功演示了同一电脑的多github账号管理
-http://code.tutsplus.com/tutorials/quick-tip-how-to-work-with-github-and-multiple-accounts--net-22574
+[国外视频演示例子](http://code.tutsplus.com/tutorials/quick-tip-how-to-work-with-github-and-multiple-accounts--net-22574)
+

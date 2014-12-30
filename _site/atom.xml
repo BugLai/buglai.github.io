@@ -4,7 +4,7 @@
  <title>活在当下</title>
  <link href="buglai.github.io/" rel="self"/>
  <link href="buglai.github.io"/>
- <updated>2014-12-30T21:27:46+08:00</updated>
+ <updated>2014-12-30T22:29:13+08:00</updated>
  <id>buglai.github.io</id>
  <author>
    <name>BugLai</name>
@@ -106,7 +106,8 @@ buglaideMacBook-Pro:test buglai$ git remote add origin git@github-BugLai:BugLai/
 &lt;span class=&quot;n&quot;&gt;buglaideMacBook&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;Pro&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;test&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;buglai&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;git&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;push&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;u&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;origin&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;master&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;以上也显示成功了，以上成功演示了同一电脑的多github账号管理
-http://code.tutsplus.com/tutorials/quick-tip-how-to-work-with-github-and-multiple-accounts–net-22574&lt;/p&gt;
+&lt;a href=&quot;http://code.tutsplus.com/tutorials/quick-tip-how-to-work-with-github-and-multiple-accounts--net-22574&quot;&gt;国外视频演示例子&lt;/a&gt;&lt;/p&gt;
+
 </content>
  </entry>
  

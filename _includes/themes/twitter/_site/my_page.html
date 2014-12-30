@@ -1,13 +1,11 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>关于</title>
-    
-    
-    <meta name="author" content="BugLai">
+    <title>{{ page.title }}</title>
+    {% if page.keywords %}<meta name="keywords" content="{{ page.keywords }}">{% endif %}
+    {% if page.description %}<meta name="description" content="{{ page.description }}">{% endif %}
+    <meta name="author" content="{{ site.author.name }}">
 
     <!-- Enable responsive viewport -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,8 +40,8 @@
     -->
 
     <!-- atom & rss feed -->
-    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
-    <link href="" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+    <link href="{{ BASE_PATH }}{{ site.codepiano.atom_path }}" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="{{ BASE_PATH }}{{ site.codepiano.rss_path }}" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
 
     <script type="text/javascript">
     </script>
@@ -58,25 +56,10 @@
           <div class="span2">
           </div>
           <div class="span8">
-            <a class="brand" href="/">
-              <span class="site-author"> BugLai </span>
-              <span class="site-title"> /* 活在当下 */ </span>
+            <a class="brand" href="{{ HOME_PATH }}">
+              <span class="site-author"> {{ site.author.name }} </span>
+              <span class="site-title"> /* {{ site.title }} */ </span>
             </a>
-            <ul class="nav">
-              
-              
-              
-
-
-
-
-
-<li class="posts"><a href="/posts.html">目录</a></li>
-<li class="timeline"><a href="/timeline.html">时间线</a></li>
-<li class="categories"><a href="/categories.html">分类</a></li>
-<li class="active"><a href="/about.html">关于</a></li>
-
-            </ul>
           </div>
           <div class="span2">
           </div>
@@ -84,65 +67,15 @@
       </div>
 
       <!-- 正文 -->
-      
-
-<div class="row-fluid typo">
-  <div class="span2"></div>
-  <div class="span8">
-    <br />
-    
-
-
-<h2 id="">关于我</h2>
-
-<p>Android开发者 + python初学者,爱技术，爱毽球，爱摄影!</p>
-
-<p>如果想更多的了解我，看这里<a href="http://buglai.github.io/my-progress">我的大事记</a></p>
-
-
-
-<h2 id="_2">联系我</h2>
-
-<ul>
-<li>
-<p>GitHub: <a href="https://github.com/buglai">BugLai</a></p>
-</li>
-
-<li>
-<p>知乎: <a href="http://www.zhihu.com/people/lai-huan-sheng">BugLai</a></p>
-</li>
-
-
-<br />
-<hr>
-<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="" data-title="关于" data-url="/about.html"></div>
-<!-- 多说评论框 end -->
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-var duoshuoQuery = {short_name:"buglai"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		 || document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-<!-- 多说公共JS代码 end -->
-
-
-
-
-  </div>
+      <div class="row-fluid typo">
+      <div class="span2"></div>
+      <div class="span8">
+        <br />
+        {{ content }}
+      </div>
   <div class="span2"></div>
 </div>
-
-
-
-    
-
+      
+    {% include codepiano/analytics %}
   </body>
 </html>
-
