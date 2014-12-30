@@ -1,6 +1,6 @@
 ## BugLai的博客
 
-基于jekyll的个人博客站点[http://buglai.github.io/blog]，主题风格本着"simpler and simpler"的原则。
+基于jekyll的个人博客站点[http://buglai.github.io/blog]，Theme:"simpler and simpler"
 
 ## 关于我
 
