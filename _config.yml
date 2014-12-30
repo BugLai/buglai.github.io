@@ -71,7 +71,7 @@ codepiano :
   categories_path : /categories.html
   tags_path : /posts.html
   atom_path : /atom.xml
-  rss_path : /rss.xml
+  #rss_path : /rss.xml
 
   # Settings for comments helper
   # Set 'provider' to the comment provider you want to use.
@@ -80,7 +80,8 @@ codepiano :
   comments :
     provider : disqus
     disqus :
-      short_name : stormsblog
+      short_name : buglai
+
    
   # Settings for analytics helper
   # Set 'provider' to the analytics provider you want to use.
