@@ -116,7 +116,7 @@ public static Application configApplication(ProxyApplication proxyApplication){
 
 
 总结：目前已经能够顺利执行整个流程，对加壳后的apk进行反编译后查看源码，原apk的smali代码只有寥寥的几个R文件，完全没有了smali代码，但是加壳后的apk失真太严重，整个画面模糊，目前还不清楚原因。
-测试工程的链接地址：
+[测试工程的链接地址](https://github.com/BugLai/AndroidShell)
 
 
 
