@@ -4,7 +4,7 @@
  <title>活在当下</title>
  <link href="buglai.github.io/" rel="self"/>
  <link href="buglai.github.io"/>
- <updated>2015-01-16T15:11:39+08:00</updated>
+ <updated>2015-01-16T15:21:11+08:00</updated>
  <id>buglai.github.io</id>
  <author>
    <name>BugLai</name>
@@ -112,7 +112,7 @@ buglaideMacBook-Pro:test buglai$ git remote add origin git@github-BugLai:BugLai/
  </entry>
  
  <entry>
-   <title>“Android APK 加壳原理浅析”</title>
+   <title>Android APK 加壳原理浅析</title>
    <link href="buglai.github.io/android/2014/01/16/Android-analysis-packer"/>
    <updated>2014-01-16T00:00:00+08:00</updated>
    <id>buglai.github.io/android/2014/01/16/Android-analysis-packer</id>
