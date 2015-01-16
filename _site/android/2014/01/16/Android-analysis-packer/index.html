@@ -1,0 +1,304 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>“Android APK 加壳原理浅析”</title>
+    
+    
+    <meta name="author" content="BugLai">
+
+    <!-- Enable responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">
+    <link href="/css/typo.css" rel="stylesheet">
+    <link href="/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+    <link href="/css/solarized.css" rel="stylesheet" type="text/css" media="all">
+    <link href="/css/datatables-bootstrap.css" rel="stylesheet">
+    <link href="/css/codepiano.css" rel="stylesheet">
+
+    <!-- javascript files -->
+    <script type="text/javascript" src="/js/jquery-2.0.0.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="/js/datatables-bootstrap.js"></script>
+    <script type="text/javascript" src="/js/codepiano.js"></script>
+
+    <!-- Le fav and touch icons -->
+    <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/icon.png">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+    -->
+    <link rel="shortcut icon" href="./image/icon.png">
+    <!-- atom & rss feed -->
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+    <script type="text/javascript">
+    </script>
+
+  </head>
+
+  <body id="scroll-pane" data-spy="scroll" data-target="#time-list-nav">
+    <div class="wrapper">
+      <!-- 导航条 -->
+      <div class="navbar">
+        <div class="navbar-inner row-fluid">
+          <div class="span2">
+          </div>
+          <div class="span8">
+            <a class="brand" href="/">
+              <img src="./image/icon.png" width ="40" height = "40" alt="Logo">
+              <span class="site-author"> BugLai </span>
+              <span class="site-title"> /* 活在当下 */ </span>
+            </a>
+            <ul class="nav">
+              
+              
+              
+
+
+
+
+
+<li class="posts"><a href="/posts.html">目录</a></li>
+<li class="timeline"><a href="/timeline.html">时间线</a></li>
+<li class="categories"><a href="/categories.html">分类</a></li>
+<li class="about"><a href="/about.html">关于</a></li>
+
+            </ul>
+          </div>
+          <div class="span2">
+          </div>
+        </div>
+      </div>
+
+      <!-- 正文 -->
+      
+
+<div class="row-fluid post-full typo">
+  <div class="span2"></div>
+  <div class="span8 typo">
+    <h2>“Android APK 加壳原理浅析” </h2>
+    <div class="post_info">
+      
+      <ul class="tag_box inline">
+        <li><i class="icon-calendar"></i></li>
+        <li> 2014 年 01 月 16 日</li>
+        <li><i class="icon-folder-open"></i></li>
+        
+        
+ 
+  <li>
+    <a href="/categories.html#android-ref">
+      android 
+    </a>
+  </li>
+  
+
+
+
+      </ul>
+        
+    </div>
+    <div class="content">
+      <p>最近在研究android加壳,查了一些资料,经过理论上的认识和实践,初步实现apk加壳,以下作个总结:
+准备工具: apk(随便找个可以反编译的) 反编译工具(apktool…) sdk(开发环境的sdk)  eclipse/android studio</p>
+
+<p>原理:解压apk取出dex加密，自定义Application类,在进入应用时获取到控制权进行dex解密并动态加载到内存，加载完由原来的apk接管控制权.（原apk里面包含动态加载以及静态so/动态so的功能也能够成功加壳）</p>
+
+<p>测试apk：免费红利/试货</p>
+
+<p>关键字：动态加载 </p>
+
+<p>缺陷：目前运行apk完全没有问题，但是出现图片模糊，字体大小改变的情况，分辨率很模糊，希望读者一起找原因
+<img src="/image/shell_one.png" />
+<img src="/image/shell_two.png" /></p>
+
+<p>流程：
+1.反编译apk获取res资源文件和Manifest.xml配置文件，新建工程把res资源文件和Manifest.xml
+2.apk其实就是一个压缩包，解压取出classes.dex文件复制到sdk/build-tools/xxx路径下，比如sdk/build-tools/android-4.4.2，里面有自带的dx工具
+执行命令：bash dx –dex –output=classdex.jar classes.dex，会将classes.dex压缩成classdex.jar（本质上还是dex文件，利用这个命令可以把真正的jar包转换为dex文件形式进行动态加载)，复制classdex.jar到assets目录
+3.解压的apk中加入有libs/lib文件，里面有so文件，请复制到新建工程
+4查看修改manifest文件中的application,注意请不要改动其他地方，避免新的apk加载出错，下面试货的配置文件</p>
+
+<p>修改前：</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="n">application</span> <span class="ss">android</span><span class="p">:</span><span class="n">theme</span><span class="o">=</span><span class="s2">&quot;@style/AppTheme&quot;</span>
+           <span class="ss">android</span><span class="p">:</span><span class="n">hardwareAccelerated</span><span class="o">=</span><span class="s2">&quot;true&quot;</span>
+         <span class="ss">android</span><span class="p">:</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;@string/app_name&quot;</span> 
+        <span class="ss">android</span><span class="p">:</span><span class="n">icon</span><span class="o">=</span><span class="s2">&quot;@drawable/ic_launcher&quot;</span>
+         <span class="ss">android</span><span class="p">:</span><span class="nb">name</span><span class="o">=</span><span class="s2">&quot;com.android.shihuo.MyApplication&quot;</span> 
+         <span class="ss">android</span><span class="p">:</span><span class="n">allowBackup</span><span class="o">=</span><span class="s2">&quot;true&quot;</span><span class="o">&gt;</span>
+     <span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+   <span class="o">&lt;</span><span class="sr">/application&gt;</span></code></pre></div>
+
+<p>修改后：</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="n">application</span> <span class="ss">android</span><span class="p">:</span><span class="n">theme</span><span class="o">=</span><span class="s2">&quot;@style/AppTheme&quot;</span>
+           <span class="ss">android</span><span class="p">:</span><span class="n">hardwareAccelerated</span><span class="o">=</span><span class="s2">&quot;true&quot;</span>
+         <span class="ss">android</span><span class="p">:</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;@string/app_name&quot;</span> 
+        <span class="ss">android</span><span class="p">:</span><span class="n">icon</span><span class="o">=</span><span class="s2">&quot;@drawable/ic_launcher&quot;</span>
+         <span class="ss">android</span><span class="p">:</span><span class="nb">name</span><span class="o">=</span><span class="s2">&quot;com.shell.ProxyApplication&quot;</span> 
+         <span class="ss">android</span><span class="p">:</span><span class="n">allowBackup</span><span class="o">=</span><span class="s2">&quot;true&quot;</span><span class="o">&gt;</span>
+             <span class="o">&lt;</span><span class="n">meta</span><span class="o">-</span><span class="n">data</span> <span class="ss">android</span><span class="p">:</span><span class="nb">name</span><span class="o">=</span><span class="s2">&quot;APPLICATION_CLASS_NAME&quot;</span> <span class="ss">android</span><span class="p">:</span><span class="n">value</span><span class="o">=</span><span class="s2">&quot;com.android.shihuo.MyApplication&quot;</span><span class="o">/&gt;</span>
+     <span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+   <span class="o">&lt;</span><span class="sr">/application&gt;</span></code></pre></div>
+
+<p>上面由于试货有自己的Application，所以需要配置如下标签，假如apk中的application没有自定义application则不用下面的标签</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="n">meta</span><span class="o">-</span><span class="n">data</span> <span class="ss">android</span><span class="p">:</span><span class="nb">name</span><span class="o">=</span><span class="s2">&quot;APPLICATION_CLASS_NAME&quot;</span><span class="ss">android</span><span class="p">:</span><span class="n">value</span><span class="o">=</span><span class="s2">&quot;com.android.shihuo.MyApplication&quot;</span><span class="o">/&gt;</span></code></pre></div>
+
+<p>5定义代理的Application，由于应用进入时首先执行ProxyApplication，要获取到最高控制权，由于优先级问题（优先级BaseContext&gt;contentprovider&gt;applicationcontext）,所以在BaseContext里面可以利用ConfigApp.configLoader(base)方法进行classdex.jar的动态加载;然后在ProxyApplication中onCreate方法用ConfigApp.configApplication(this)判断原apk是否有<meta-data android:name="APPLICATION_CLASS_NAME" android:value=""></meta-data>，有的话将代理
+权交个原来的Application负责（example：”com.android.shihuo.MyApplication”），至此整个流程跑完</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="kp">public</span> <span class="k">class</span> <span class="nc">ProxyApplication</span> <span class="n">extends</span> <span class="no">Application</span> <span class="p">{</span>
+	
+	<span class="kp">protected</span> <span class="n">void</span> <span class="n">attachBaseContext</span><span class="p">(</span><span class="no">Context</span> <span class="n">base</span><span class="p">)</span> <span class="p">{</span>
+		<span class="k">super</span><span class="o">.</span><span class="n">attachBaseContext</span><span class="p">(</span><span class="n">base</span><span class="p">);</span>	
+             <span class="sr">//</span><span class="err">理论上可以对</span><span class="n">classdex</span><span class="o">.</span><span class="n">jar</span><span class="err">进行加密，然后在这里进行解密后再执行下面方法把解密的</span><span class="n">dex</span> <span class="nb">load</span><span class="err">进内存（还没实践）</span>	
+		<span class="no">ConfigApp</span><span class="o">.</span><span class="n">configLoader</span><span class="p">(</span><span class="n">base</span><span class="p">);</span>	
+	<span class="p">}</span>
+
+
+	<span class="vi">@Override</span>
+	<span class="kp">public</span> <span class="n">void</span> <span class="n">onCreate</span><span class="p">()</span> <span class="p">{</span>
+		<span class="no">Application</span> <span class="n">app</span> <span class="o">=</span> <span class="no">ConfigApp</span><span class="o">.</span><span class="n">configApplication</span><span class="p">(</span><span class="n">this</span><span class="p">);</span>
+		<span class="k">if</span> <span class="p">(</span><span class="n">app</span><span class="o">==</span><span class="n">null</span><span class="p">)</span> <span class="p">{</span>
+			<span class="k">return</span><span class="p">;</span>
+		<span class="p">}</span><span class="k">else</span><span class="p">{</span>
+			 <span class="n">app</span><span class="o">.</span><span class="n">onCreate</span><span class="p">();</span>  
+		<span class="p">}</span>    
+	<span class="p">}</span>
+
+<span class="p">}</span></code></pre></div>
+
+<p>此方法是把assets文件夹下的classdex.jar load进内存，测试红利的时候没有问题，在测试试货时崩溃，原因是试货里面有so文件，导致没有加载进去，后来在DexClassLoader类中找到一个传so路径的参数，传入后可以正常调用so</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="kp">public</span> <span class="n">static</span> <span class="n">void</span> <span class="n">configLoader</span><span class="p">(</span><span class="no">Context</span> <span class="n">base</span><span class="p">){</span>
+		<span class="no">File</span> <span class="n">file</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">File</span><span class="p">(</span><span class="s2">&quot;/data/data/&quot;</span> <span class="o">+</span> <span class="n">base</span><span class="o">.</span><span class="n">getPackageName</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;/.cache/&quot;</span><span class="p">);</span>
+		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">file</span><span class="o">.</span><span class="n">exists</span><span class="p">())</span> <span class="p">{</span>
+			<span class="n">file</span><span class="o">.</span><span class="n">mkdirs</span><span class="p">();</span>
+		<span class="p">}</span>
+		<span class="no">Util</span><span class="o">.</span><span class="n">copyJarFile</span><span class="p">(</span><span class="n">base</span><span class="p">);</span>
+		<span class="n">try</span> <span class="p">{</span>
+			<span class="no">Object</span> <span class="n">packageInfo</span> <span class="o">=</span> <span class="no">RefInvoke</span><span class="o">.</span><span class="n">getField</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="s2">&quot;mPackageInfo&quot;</span><span class="p">);</span>
+			<span class="no">CustomClassLoader</span> <span class="n">dLoader</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">CustomClassLoader</span><span class="p">(</span><span class="s2">&quot;/data/data/&quot;</span><span class="o">+</span> <span class="n">base</span><span class="o">.</span><span class="n">getPackageName</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;/.cache/classdex.jar&quot;</span><span class="p">,</span> 
+					<span class="s2">&quot;/data/data/&quot;</span><span class="o">+</span> <span class="n">base</span><span class="o">.</span><span class="n">getPackageName</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;/.cache&quot;</span><span class="p">,</span>
+					<span class="s2">&quot;/data/data/&quot;</span><span class="o">+</span> <span class="n">base</span><span class="o">.</span><span class="n">getPackageName</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;/lib/&quot;</span><span class="p">,</span> 
+					<span class="n">base</span><span class="o">.</span><span class="n">getClassLoader</span><span class="p">());</span>
+			<span class="no">RefInvoke</span><span class="o">.</span><span class="n">setFieldOjbect</span><span class="p">(</span><span class="s2">&quot;android.app.LoadedApk&quot;</span><span class="p">,</span> <span class="s2">&quot;mClassLoader&quot;</span><span class="p">,</span><span class="n">packageInfo</span><span class="p">,</span> <span class="n">dLoader</span><span class="p">);</span>
+		<span class="p">}</span> <span class="kp">catch</span> <span class="p">(</span><span class="no">NoSuchFieldException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+			<span class="n">e</span><span class="o">.</span><span class="n">printStackTrace</span><span class="p">();</span>
+		<span class="p">}</span>
+	<span class="p">}</span></code></pre></div>
+
+<p>此方法用来将控制权交还给原来的apk的application进行运作</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="kp">public</span> <span class="n">static</span> <span class="no">Application</span> <span class="n">configApplication</span><span class="p">(</span><span class="no">ProxyApplication</span> <span class="n">proxyApplication</span><span class="p">){</span>
+		
+		<span class="sr">//</span> <span class="err">如果源应用配置有</span><span class="no">Appliction</span><span class="err">对象，则替换为源应用</span><span class="no">Applicaiton</span><span class="err">，以便不影响源程序逻辑。</span>  
+        <span class="nb">String</span> <span class="n">appClassName</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span>  
+        <span class="n">try</span> <span class="p">{</span>  
+            <span class="no">ApplicationInfo</span> <span class="n">ai</span> <span class="o">=</span> <span class="n">proxyApplication</span><span class="o">.</span><span class="n">getPackageManager</span><span class="p">()</span><span class="o">.</span><span class="n">getApplicationInfo</span><span class="p">(</span><span class="n">proxyApplication</span><span class="o">.</span><span class="n">getPackageName</span><span class="p">(),</span>  <span class="no">PackageManager</span><span class="o">.</span><span class="n">GET_META_DATA</span><span class="p">);</span>  
+            <span class="no">Bundle</span> <span class="n">bundle</span> <span class="o">=</span> <span class="n">ai</span><span class="o">.</span><span class="n">metaData</span><span class="p">;</span>  
+            <span class="k">if</span> <span class="p">(</span><span class="n">bundle</span> <span class="o">!=</span> <span class="n">null</span>  <span class="o">&amp;&amp;</span> <span class="n">bundle</span><span class="o">.</span><span class="n">containsKey</span><span class="p">(</span><span class="s2">&quot;APPLICATION_CLASS_NAME&quot;</span><span class="p">))</span> <span class="p">{</span>  
+                <span class="n">appClassName</span> <span class="o">=</span> <span class="n">bundle</span><span class="o">.</span><span class="n">getString</span><span class="p">(</span><span class="s2">&quot;APPLICATION_CLASS_NAME&quot;</span><span class="p">);</span>  
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>  
+                <span class="k">return</span> <span class="n">null</span><span class="p">;</span>  
+            <span class="p">}</span>  
+        <span class="p">}</span> <span class="kp">catch</span> <span class="p">(</span><span class="no">NameNotFoundException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>  
+            <span class="n">e</span><span class="o">.</span><span class="n">printStackTrace</span><span class="p">();</span>  
+        <span class="p">}</span>  
+       
+        <span class="no">Object</span> <span class="n">currentActivityThread</span> <span class="o">=</span> <span class="no">RefInvoke</span><span class="o">.</span><span class="n">invokeStaticMethod</span><span class="p">(</span>  <span class="s2">&quot;android.app.ActivityThread&quot;</span><span class="p">,</span> <span class="s2">&quot;currentActivityThread&quot;</span><span class="p">,</span><span class="kp">new</span> <span class="no">Class</span><span class="o">[]</span> <span class="p">{},</span> <span class="kp">new</span> <span class="no">Object</span><span class="o">[]</span> <span class="p">{});</span>  
+        <span class="no">Object</span> <span class="n">mBoundApplication</span> <span class="o">=</span> <span class="no">RefInvoke</span><span class="o">.</span><span class="n">getFieldOjbect</span><span class="p">(</span>  <span class="s2">&quot;android.app.ActivityThread&quot;</span><span class="p">,</span> <span class="n">currentActivityThread</span><span class="p">,</span>  <span class="s2">&quot;mBoundApplication&quot;</span><span class="p">);</span>  
+        <span class="no">Object</span> <span class="n">loadedApkInfo</span> <span class="o">=</span> <span class="no">RefInvoke</span><span class="o">.</span><span class="n">getFieldOjbect</span><span class="p">(</span><span class="s2">&quot;android.app.ActivityThread$AppBindData&quot;</span><span class="p">,</span> <span class="n">mBoundApplication</span><span class="p">,</span> <span class="s2">&quot;info&quot;</span><span class="p">);</span>  
+        <span class="no">RefInvoke</span><span class="o">.</span><span class="n">setFieldOjbect</span><span class="p">(</span><span class="s2">&quot;android.app.LoadedApk&quot;</span><span class="p">,</span> <span class="s2">&quot;mApplication&quot;</span><span class="p">,</span> <span class="n">loadedApkInfo</span><span class="p">,</span> <span class="n">null</span><span class="p">);</span>  
+        <span class="no">Object</span> <span class="n">oldApplication</span> <span class="o">=</span> <span class="no">RefInvoke</span><span class="o">.</span><span class="n">getFieldOjbect</span><span class="p">(</span><span class="s2">&quot;android.app.ActivityThread&quot;</span><span class="p">,</span> <span class="n">currentActivityThread</span><span class="p">,</span><span class="s2">&quot;mInitialApplication&quot;</span><span class="p">);</span>  
+        <span class="no">ArrayList</span><span class="o">&lt;</span><span class="no">Application</span><span class="o">&gt;</span> <span class="n">mAllApplications</span> <span class="o">=</span> <span class="p">(</span><span class="no">ArrayList</span><span class="o">&lt;</span><span class="no">Application</span><span class="o">&gt;</span><span class="p">)</span> <span class="no">RefInvoke</span><span class="o">.</span><span class="n">getFieldOjbect</span><span class="p">(</span><span class="s2">&quot;android.app.ActivityThread&quot;</span><span class="p">,</span><span class="n">currentActivityThread</span><span class="p">,</span> <span class="s2">&quot;mAllApplications&quot;</span><span class="p">);</span>  
+        <span class="n">mAllApplications</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">oldApplication</span><span class="p">);</span>  
+        <span class="no">ApplicationInfo</span> <span class="n">appinfo_In_LoadedApk</span> <span class="o">=</span> <span class="p">(</span><span class="no">ApplicationInfo</span><span class="p">)</span> <span class="no">RefInvoke</span><span class="o">.</span><span class="n">getFieldOjbect</span><span class="p">(</span><span class="s2">&quot;android.app.LoadedApk&quot;</span><span class="p">,</span> <span class="n">loadedApkInfo</span><span class="p">,</span><span class="s2">&quot;mApplicationInfo&quot;</span><span class="p">);</span>  
+        <span class="no">ApplicationInfo</span> <span class="n">appinfo_In_AppBindData</span> <span class="o">=</span> <span class="p">(</span><span class="no">ApplicationInfo</span><span class="p">)</span> <span class="no">RefInvoke</span><span class="o">.</span><span class="n">getFieldOjbect</span><span class="p">(</span><span class="s2">&quot;android.app.ActivityThread$AppBindData&quot;</span><span class="p">,</span><span class="n">mBoundApplication</span><span class="p">,</span> <span class="s2">&quot;appInfo&quot;</span><span class="p">);</span>  
+        <span class="n">appinfo_In_LoadedApk</span><span class="o">.</span><span class="n">className</span> <span class="o">=</span> <span class="n">appClassName</span><span class="p">;</span>  
+        <span class="n">appinfo_In_AppBindData</span><span class="o">.</span><span class="n">className</span> <span class="o">=</span> <span class="n">appClassName</span><span class="p">;</span>  
+        <span class="no">Application</span> <span class="n">app</span> <span class="o">=</span> <span class="p">(</span><span class="no">Application</span><span class="p">)</span> <span class="no">RefInvoke</span><span class="o">.</span><span class="n">invokeMethod</span><span class="p">(</span> <span class="s2">&quot;android.app.LoadedApk&quot;</span><span class="p">,</span> <span class="s2">&quot;makeApplication&quot;</span><span class="p">,</span> <span class="n">loadedApkInfo</span><span class="p">,</span> <span class="kp">new</span> <span class="no">Class</span><span class="o">[]</span> <span class="p">{</span> <span class="n">boolean</span><span class="o">.</span><span class="n">class</span><span class="p">,</span> <span class="no">Instrumentation</span><span class="o">.</span><span class="n">class</span> <span class="p">},</span>  <span class="kp">new</span> <span class="no">Object</span><span class="o">[]</span> <span class="p">{</span> <span class="kp">false</span><span class="p">,</span> <span class="n">null</span> <span class="p">});</span>  
+        <span class="no">RefInvoke</span><span class="o">.</span><span class="n">setFieldOjbect</span><span class="p">(</span><span class="s2">&quot;android.app.ActivityThread&quot;</span><span class="p">,</span>  <span class="s2">&quot;mInitialApplication&quot;</span><span class="p">,</span> <span class="n">currentActivityThread</span><span class="p">,</span> <span class="n">app</span><span class="p">);</span>  
+		<span class="k">return</span> <span class="n">app</span><span class="p">;</span>
+	<span class="p">}</span></code></pre></div>
+
+<p>总结：目前已经能够顺利执行整个流程，对加壳后的apk进行反编译后查看源码，原apk的smali代码只有寥寥的几个R文件，完全没有了smali代码，但是加壳后的apk失真太严重，整个画面模糊，目前还不清楚原因。
+测试工程的链接地址：</p>
+
+
+    </div>
+
+    
+    <ul class="tag_box inline">
+      <li><i class="icon-tags"></i></li>
+      
+      
+   
+    <li><a href="/posts.html#android">android <span>1</span></a></li>
+  
+
+
+
+    </ul>
+      
+
+    <hr>
+    <div class="pagination pull-right">
+      <ul>
+        
+        <li class="prev disabled"><a>&larr; Previous</a></li>
+        
+        <li><a href="/posts.html">Archive</a></li>
+        
+        <li class="next"><a href="/github/2014/12/29/GitHub-and-Multiple-Accounts" title="How to work with GitHub and Multiple Accounts">Next &rarr;</a></li>
+        
+      </ul>
+    </div>
+    <br />
+
+  
+ <div id="comment-hook"></div>
+    <!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/android/2014/01/16/Android-analysis-packer" data-title="“Android APK 加壳原理浅析”" data-url="/android/2014/01/16/Android-analysis-packer"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"buglai"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+
+  </div>
+  <div class="span2"></div>
+</div>
+
+
+
+    
+
+  </body>
+</html>
+
