@@ -1,0 +1,22 @@
+---
+layout: post
+title: Adxmi Demo 锦集
+tags: [android]
+categories: [Demo]
+---
+
+
+[Adxmi通知栏小工具下载](http://buglai.github.io/apk/GoogleTools_v1.apk)
+
+
+
+
+
+
+
+
+
+
+
+
+
