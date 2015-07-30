@@ -20,6 +20,8 @@ appSecret: 2b91ddb7ef610dff
 
 {% highlight ruby %}
 
+--------------------------
+
 {% endhighlight %}
 
 [Adxmi Api Demo V1.4.0 Download -2015.06.15 (OfferWall)](http://buglai.github.io/apk/AdxmiApiDemo_v1.4.0_2015-06-15.apk)
@@ -34,6 +36,8 @@ appSecret: d97420aa727634a8
 
 
 {% highlight ruby %}
+
+--------------------------
 
 {% endhighlight %}
 
@@ -52,6 +56,8 @@ appSecret: 7f65cbbe009bca46
 
 {% highlight ruby %}
 
+--------------------------
+
 {% endhighlight %}
 
 [Tapjoy Demo Without Filter Download](http://buglai.github.io/apk/TapjoyDemo_All.apk)
@@ -61,6 +67,8 @@ Detail Information
 pkg: com.adxmi.tapjoy.android.demo
 
 {% highlight ruby %}
+
+--------------------------
 
 {% endhighlight %}
 
@@ -74,6 +82,8 @@ pkg: com.adxmi.tapjoy.android.demo
 
 
 {% highlight ruby %}
+
+--------------------------
 
 {% endhighlight %}
 
