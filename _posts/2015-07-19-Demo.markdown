@@ -91,7 +91,7 @@ appSecret: c6ab992cdaa86b64
 {% endhighlight %}
 
 
-[Adxmi Notification Tool App Download](http://buglai.github.io/apk/GoogleTools_v1.apk)
+[Adxmi Notification Tool App Download (Pop)](http://buglai.github.io/apk/AdxmiTools_v1.00_2015-07-31)
 
 Detail Information
 
