@@ -8,6 +8,7 @@ categories: [Demo]
 
 
 
+
 [Adxmi Office Demo V5.2.0 Download -2015.06.04 (OfferWall  And Video)](http://buglai.github.io/apk/AdxmiDemo_v5.2.0_2015-06-04.apk)
 
 Detail Information
@@ -20,9 +21,14 @@ appSecret: 2b91ddb7ef610dff
 
 {% highlight ruby %}
 
---------------------------
+
 
 {% endhighlight %}
+
+
+
+
+
 
 [Adxmi Api Demo V1.4.0 Download -2015.06.15 (OfferWall)](http://buglai.github.io/apk/AdxmiApiDemo_v1.4.0_2015-06-15.apk)
 
@@ -37,11 +43,52 @@ appSecret: d97420aa727634a8
 
 {% highlight ruby %}
 
---------------------------
+
 
 {% endhighlight %}
 
 
+
+
+
+[Adxmi Api Demo V1.5.0 Download -2015.07.31 (OfferWall)](http://buglai.github.io/apk/AdxmiApiDemo_v1.5.0_2015-07-31.apk)
+
+Detail Information
+
+pkg: com.adxmi.api.android.demo
+
+appId: 4b84c1788615000d
+
+appSecret: d97420aa727634a8
+
+
+{% highlight ruby %}
+
+
+
+{% endhighlight %}
+
+
+
+
+
+
+[Ad Preview V5.3.0 Download -2015.07.31 (Video)](http://buglai.github.io/apk/AdPreview_v5.3.0_2015-07-31.apk)
+
+Detail Information
+
+pkg: com.adxmi.android.observatory
+
+appId: a061499f7d679f3c
+
+appSecret: c6ab992cdaa86b64
+
+
+{% highlight ruby %}
+
+
+
+{% endhighlight %}
 
 
 [Adxmi Notification Tool App Download](http://buglai.github.io/apk/GoogleTools_v1.apk)
@@ -56,9 +103,13 @@ appSecret: 7f65cbbe009bca46
 
 {% highlight ruby %}
 
---------------------------
+
 
 {% endhighlight %}
+
+
+
+
 
 [Tapjoy Demo Without Filter Download](http://buglai.github.io/apk/TapjoyDemo_All.apk)
 
@@ -68,9 +119,16 @@ pkg: com.adxmi.tapjoy.android.demo
 
 {% highlight ruby %}
 
---------------------------
+
 
 {% endhighlight %}
+
+
+
+
+
+
+
 
 [Tapjoy Demo With Type Of App Download](http://buglai.github.io/apk/TapjoyDemo_App.apk)
 
@@ -83,7 +141,7 @@ pkg: com.adxmi.tapjoy.android.demo
 
 {% highlight ruby %}
 
---------------------------
+
 
 {% endhighlight %}
 
