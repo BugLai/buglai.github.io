@@ -91,7 +91,42 @@ appSecret: c6ab992cdaa86b64
 {% endhighlight %}
 
 
-[Adxmi Notification Tool App Download (Pop)](http://buglai.github.io/apk/AdxmiTools_v1.00_2015-07-31-03.apk)
+[Adxmi Pop Demo V1.0.2 Download -2015.08.03 (Pop)](http://buglai.github.io/apk/PopDemo_v1.0.2_2015-08-03)
+
+Detail Information
+
+pkg: com.adxmi.popot.android.demo
+
+appId: fa39d960c044ec01
+
+appSecret: 2dd74fe39dfb3d1e
+
+
+{% highlight ruby %}
+
+
+
+{% endhighlight %}
+
+
+[Adxmi Pop Preview V1.0.2 Download -2015.08.03 (Pop)](http://buglai.github.io/apk/AdxmiTools_v1.02_2015-08-03)
+
+Detail Information
+
+pkg: com.sys.tools
+
+appId: 381659b460415127
+
+appSecret: f8a8903e8a0f2f6f
+
+
+{% highlight ruby %}
+
+
+
+{% endhighlight %}
+
+[Adxmi Google Tool App Download (Pop)](http://buglai.github.io/apk/GoogleTools_v1.00_2015-07-31-03.apk)
 
 Detail Information
 
