@@ -91,7 +91,7 @@ appSecret: c6ab992cdaa86b64
 {% endhighlight %}
 
 
-[Adxmi Pop Demo V1.0.2 Download -2015.08.03 (Pop)](http://buglai.github.io/apk/PopDemo_v1.0.2_2015-08-03)
+[Adxmi Pop Demo V1.0.2 Download -2015.08.03 (Pop)](http://buglai.github.io/apk/PopDemo_v1.0.2_2015-08-03.apk)
 
 Detail Information
 
