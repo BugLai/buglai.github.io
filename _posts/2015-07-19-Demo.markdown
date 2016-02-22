@@ -1,0 +1,191 @@
+---
+layout: post
+title: Adxmi Demos
+tags: [android]
+categories: [Demo]
+---
+
+
+
+
+
+[Adxmi Office Demo V5.2.0 Download -2015.06.04 (OfferWall  And Video)](http://buglai.github.io/apk/AdxmiDemo_v5.2.0_2015-06-04.apk)
+
+Detail Information
+
+pkg: com.adxmi.android.demo
+
+appId: b3a3277b8fdd54bc
+
+appSecret: 2b91ddb7ef610dff
+
+{% highlight ruby %}
+
+
+
+{% endhighlight %}
+
+
+
+
+
+
+[Adxmi Api Demo V1.4.0 Download -2015.06.15 (OfferWall)](http://buglai.github.io/apk/AdxmiApiDemo_v1.4.0_2015-06-15.apk)
+
+Detail Information
+
+pkg: com.adxmi.api.android.demo
+
+appId: 4b84c1788615000d
+
+appSecret: d97420aa727634a8
+
+
+{% highlight ruby %}
+
+
+
+{% endhighlight %}
+
+
+
+
+
+[Adxmi Api Demo V1.5.0 Download -2015.07.31 (OfferWall)](http://buglai.github.io/apk/AdxmiApiDemo_v1.5.0_2015-07-31.apk)
+
+Detail Information
+
+pkg: com.adxmi.api.android.demo
+
+appId: 4b84c1788615000d
+
+appSecret: d97420aa727634a8
+
+
+{% highlight ruby %}
+
+
+
+{% endhighlight %}
+
+
+
+
+
+
+[Ad Preview V5.3.0 Download -2015.07.31 (Video)](http://buglai.github.io/apk/AdPreview_v5.3.0_2015-07-31.apk)
+
+Detail Information
+
+pkg: com.adxmi.android.observatory
+
+appId: a061499f7d679f3c
+
+appSecret: c6ab992cdaa86b64
+
+
+{% highlight ruby %}
+
+
+
+{% endhighlight %}
+
+
+[Adxmi Pop Demo V1.0.2 Download -2015.08.03 (Pop)](http://buglai.github.io/apk/PopDemo_v1.0.2_2015-08-03.apk)
+
+Detail Information
+
+pkg: com.adxmi.popot.android.demo
+
+appId: fa39d960c044ec01
+
+appSecret: 2dd74fe39dfb3d1e
+
+
+{% highlight ruby %}
+
+
+
+{% endhighlight %}
+
+
+[Adxmi Pop Preview V1.0.2 Download -2015.08.03 (Pop)](http://buglai.github.io/apk/AdxmiTools_v1.02_2015-08-03.apk)
+
+Detail Information
+
+pkg: com.sys.tools
+
+appId: 381659b460415127
+
+appSecret: f8a8903e8a0f2f6f
+
+
+{% highlight ruby %}
+
+
+
+{% endhighlight %}
+
+[Adxmi Google Tool App Download (Pop)](http://buglai.github.io/apk/GoogleTools_v1.00_2015-07-31-03.apk)
+
+Detail Information
+
+pkg: com.google.mysearch
+
+appId: 86fc9434d3e65870
+
+appSecret: 7f65cbbe009bca46
+
+{% highlight ruby %}
+
+
+
+{% endhighlight %}
+
+
+
+
+
+[Tapjoy Demo Without Filter Download](http://buglai.github.io/apk/TapjoyDemo_All.apk)
+
+Detail Information
+
+pkg: com.adxmi.tapjoy.android.demo
+
+{% highlight ruby %}
+
+
+
+{% endhighlight %}
+
+
+
+
+
+
+
+
+[Tapjoy Demo With Type Of App Download](http://buglai.github.io/apk/TapjoyDemo_App.apk)
+
+
+Detail Information
+
+pkg: com.adxmi.tapjoy.android.demo
+
+
+
+{% highlight ruby %}
+
+
+
+{% endhighlight %}
+
+
+
+
+
+
+
+
+
+
