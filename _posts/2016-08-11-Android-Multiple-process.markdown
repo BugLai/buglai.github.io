@@ -202,7 +202,6 @@ private static String getProcessName(Context context, int pid) {
      跨进程通信其实是有很方法实现的，比如通过Demo测试在Intent中传递数据给另一个进程的组件，是可以实现的。在确保不会出现并发情况下使用SharePreferences也可以，还能基于Binder的Messenger和AIDL以及Socket等。这里举一些最简单的例子介绍一下
 
 
-    
 ### 7.1 Intent通信
      Intent中附加extras从主进程中MainActivity组件传递信息给另一个进程的MainService，通过下面输出的日志可以看出通过Intent是可以进行进程间通信的
 
@@ -221,7 +220,6 @@ private static String getProcessName(Context context, int pid) {
         Log.i(TAG,"MainService is onStartCommand:"+value);
         return START_STICKY;
     }
-    s
 08-11 22:02:05.522 19681-19681/com.android.multiprocess:mainService I/MultiProcessTest: MainService is onStartCommand:I AM FROM MainActivity
 {% endhighlight %}
 
@@ -235,6 +233,50 @@ private static String getProcessName(Context context, int pid) {
  
 
 ### 7.3 利用AIDL进行数据通信
+
+     接下来我们利用AIDL的一个简单例子进行讲解怎么通过它进行多进程通信，首先在工程中创建MyAIDL的aidl文件，并定义了 multiprocessMethod 方法，然后创建一个在新的进程 :remote 中的 AIDLRemoteService 类，并在类中实例化MyAIDL,然后我们在MainActivity中实例化 AIDLRemoteService 中实例化 MyAIDL 接口，然后在通信的时候直接调用 myAIDL.multiprocessMethod(); 就可以实现数据的通信
+
+ 
+
+{% highlight ruby %}
+
+       // MyAIDL.aidl
+        package com.android.multiprocess;
+        // Declare any non-default types here with import statements
+        interface MyAIDL {
+        /**
+        * Demonstrates some basic types that you can use as parameters
+        * and return values in AIDL.
+        */
+        void multiprocessMethod()
+        
+        }
+        
+        public class AIDLRemoteService extends Service {
+        
+        private static final String TAG = "AIDLRemoteService";
+        private final MyAIDL.Stub mBinder=new MyAIDL.Stub(){
+        
+       @Override
+       public void multiprocessMethod() throws RemoteException {
+          Log.d(TAG, "multiprocessMethod: "+"this is myAIDL");
+        }
+    };
+    }          
+    
+    <service android:name=".AIDLRemoteService" android:process=":remote"/>
+    
+    Intent intent2 = new Intent(MainActivity.this,AIDLRemoteService.class);
+    bindService(intent2,serviceConnection,Context.*BIND_AUTO_CREATE*);
+    
+    private MyAIDL myAIDL;
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+    @Override
+    public void onServiceConnected(ComponentName componentName, IBinder iBinder)  {
+    Log.e(TAG,"onServiceConnected");
+    myAIDL = MyAIDL.Stub.asInterface(iBinder);}      @Override     public void onServiceDisconnected(ComponentName componentName) {          Log.e(TAG,"onServiceDisconnected");         myAIDL = null;      }};
+
+{% endhighlight %}
 
   
 
