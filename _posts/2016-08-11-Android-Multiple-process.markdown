@@ -21,12 +21,8 @@ categories: [Android]
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
 {% endhighlight %}
-
-不过这样做也不能很好解决问题，当API小于11,或者应用需要的内存比largeHeap更大，系统总的内存不变的情况下，每个应用都申请更多的内存，会影响到设备的运行效率，为了解决应用内存问题，Android又引入了多进程的概念，下面简单概括一下多进程
-
    
-
-
+    不过这样做也不能很好解决问题，当API小于11,或者应用需要的内存比largeHeap更大，系统总的内存不变的情况下，每个应用都申请更多的内存，会影响到设备的运行效率，为了解决应用内存问题，Android又引入了多进程的概念，下面简单概括一下多进程
 
 ## 1.多进程用途
       一般把组件设置成多进程目的是能够获得更多的空间处理资源，比如你可以把负责音乐播放的服务，负责视频播放的Activity，负责后台检测推送或者更新的服务等放在一个独立的进程中进行，这样就可以在系统杀死你的主进程是，另一个进程可能还存在着，这里举几个例子，比如Facebook新开命名为com.facebook.katana:videoplayer的进程负责app视频播放的模块，UC会开多一个com.UCMobile.intl:push进程负责推送模块等
@@ -96,11 +92,8 @@ public class MainActivity extends Activity {
               android:process=":MultiProcess"/>
 {% endhighlight %}
 
-
-
-运行上面代码，假如在service中不添加process属性，那么我们打印出来的结果是：
-   
-   
+    运行上面代码，假如在service中不添加process属性，那么我们打印出来的结果是：
+ 
 {% highlight ruby %}
 
 08-11 17:20:28.244 7361-7361/com.android.multiprocess I/MultiProcessTest: on create() in MainActivity :true
@@ -109,9 +102,8 @@ public class MainActivity extends Activity {
 
 {% endhighlight %}
 
-假如不在service中添加process属性，那么我们打印出来的结果是：
-
-   
+    假如不在service中添加process属性，那么我们打印出来的结果是：
+    
 {% highlight ruby %}
 
 08-11 17:18:38.819 5215-5215/com.android.multiprocess I/MultiProcessTest: on create() in MainActivity :true
@@ -123,11 +115,10 @@ public class MainActivity extends Activity {
 
 
 ## 4.多进程的创建顺序
-
-上面我们已经开始使用了多进程，那么对于Android系统来说，是怎么创建一个进程的呢，在一个应用多进程下是如何创建进程的，下面我们通过代码来查看一下，我们在Manifest声明两个Service，其中一个在进程名为ServiceA中，那么现在我们在Application中启动这两个service，通过输出log，我们看到应用首先实例化一个PID为18939的进程，当执行启动ServiceA时，由于ServiceA定义为一个新的进程，系统会首先初始化该进程，此时ServiceA处于线程阻塞中，这样直接跳过ServiceA执行了ServiceB，新的进程实例化出来之后，在Application的Oncreate中获取到PID为19113的进程，这时ServiceA会执行两次，一次是进程PID为18939的，一次是进程PID19113的，然后进程PID19113再执行ServiceB一次，结论就是Android在遇到需要放入进程的组件时，会先创建此进程，此时该组件是线程阻塞的，直到新进程创建完。通过分析也可以知道进程的创建是会影响Application的实例。   
-       
+    
+    上面我们已经开始使用了多进程，那么对于Android系统来说，是怎么创建一个进程的呢，在一个应用多进程下是如何创建进程的，下面我们通过代码来查看一下，我们在Manifest声明两个Service，其中一个在进程名为ServiceA中，那么现在我们在Application中启动这两个service，通过输出log，我们看到应用首先实例化一个PID为18939的进程，当执行启动ServiceA时，由于ServiceA定义为一个新的进程，系统会首先初始化该进程，此时ServiceA处于线程阻塞中，这样直接跳过ServiceA执行了ServiceB，新的进程实例化出来之后，在Application的Oncreate中获取到PID为19113的进程，这时ServiceA会执行两次，一次是进程PID为18939的，一次是进程PID19113的，然后进程PID19113再执行ServiceB一次，结论就是Android在遇到需要放入进程的组件时，会先创建此进程，此时该组件是线程阻塞的，直到新进程创建完。通过分析也可以知道进程的创建是会影响Application的实例。
+ 
 {% highlight ruby %}
-
     <service android:name=".ServiceA" android:process=":ServiceA"/>
     <service android:name=".ServiceB"/>
 
@@ -141,35 +132,31 @@ public class MainActivity extends Activity {
         startService(new Intent(this,ServiceB.class));
     }
   }
-
 08-11 19:34:54.281: I/MultiProcessTest(18939): App onCreate pid:18939
 08-11 19:34:54.354: I/MultiProcessTest(18939): ServiceB is onStart
 08-11 19:34:54.404: I/MultiProcessTest(19113): App onCreate pid:19113
 08-11 19:34:54.409: I/MultiProcessTest(19113): ServiceA is onStart
 08-11 19:34:54.410: I/MultiProcessTest(19113): ServiceA is onStart
 08-11 19:34:54.412: I/MultiProcessTest(18939): ServiceB is onStart
-
 {% endhighlight %}
 
  
  
 ## 5.多进程Application注意事项
-  通过上面的分析我们知道Application会根据进程的多少进行多次实例化，假如我们把很多初始化的工作放在Application中进行，这时就要特别主要进行进程间的区分，哪部分逻辑执行在主进程，哪部分逻辑执行在其他的进程，这样才不会出现一些不必要的重复执行和不可预知的bug，那么怎么进行区分，通过下面两种方式都能通过传入当前的pid来取得进程名进行区别，默认是进程名是包名，其他的进程名为包名在process属性的value，其中第一种获取方式是通过API正常的获取，一般比较耗时，第二种是直接读取系统文件会比较快，两种可以互相补充，像微信是用第一种获取，加入获取不到再用第二种获取
 
-    
+    通过上面的一些分析以及查到的一些资料显示，多进程会造成几个方面的问题，其中SharePreferences在多进程读写
+      通过上面的分析我们知道Application会根据进程的多少进行多次实例化，假如我们把很多初始化的工作放在Application中进行，这时就要特别主要进行进程间的区分，哪部分逻辑执行在主进程，哪部分逻辑执行在其他的进程，这样才不会出现一些不必要的重复执行和不可预知的bug，那么怎么进行区分，通过下面两种方式都能通过传入当前的pid来取得进程名进行区别，默认是进程名是包名，其他的进程名为包名在process属性的value，其中第一种获取方式是通过API正常的获取，一般比较耗时，第二种是直接读取系统文件会比较快，两种可以互相补充，像微信是用第一种获取，加入获取不到再用第二种获取
 
-  
 {% highlight ruby %}
-    if (getProcessName(android.os.Process.myPid()).equals(context.getPackageName())) {
+   if(getProcessName(android.os.Process.myPid()).equals(context.getPackageName()) {
      //判断进程名，保证只有主进程运行,主进程初始化逻辑
+}
+else if(getProcessName(android.os.Process.myPid()).equals(“com.android.multiprocess:ServiceA”))
+{
+ //假如在com.android.multiprocess:ServiceA进程中，进行相应的操作
+}
 
-     }else if(getProcessName(android.os.Process.myPid()).equals(“com.android.multiprocess:ServiceA”)){
-     //假如在com.android.multiprocess:ServiceA进程中，进行相应的操作
-
-     }
-
-
-   private static String getProcessName(Context context, int pid) {
+private static String getProcessName(Context context, int pid) {
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningAppProcessInfo> runningApps = am.getRunningAppProcesses();
         if (runningApps == null) {
