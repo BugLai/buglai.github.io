@@ -199,7 +199,7 @@ private static String getProcessName(Context context, int pid) {
 
 ## 7.跨进程通信
 
-     跨进程通信其实是有很方法实现的，比如通过Demo测试在Intent中传递数据给另一个进程的组件，是可以实现的。在确保不会出现并发情况下使用SharePreferences也可以，还能基于Binder的Messenger和AIDL以及Socket等。这里举一些最简单的例子介绍一下
+     跨进程通信其实是有很方法实现的，比如通过Demo测试在Intent中通过Bundle传递数据给另一个进程的组件，是可以实现的。在确保不会出现并发情况下使用SharePreferences也可以，还能基于Binder的Messenger和AIDL以及Socket，ContentProvider 等。这里举一些最简单的例子介绍一下
 
 
 ### 7.1 Intent通信
@@ -274,11 +274,17 @@ private static String getProcessName(Context context, int pid) {
     
     @Override
     public void onServiceConnected(ComponentName componentName, IBinder iBinder)  {
-    Log.e(TAG,"onServiceConnected");
     
-    myAIDL = MyAIDL.Stub.asInterface(iBinder);} 
-     @Override     public void onServiceDisconnected(ComponentName componentName) {          Log.e(TAG,"onServiceDisconnected");         myAIDL = null;
-              }};
+    Log.e(TAG,"onServiceConnected");
+    myAIDL = MyAIDL.Stub.asInterface(iBinder);}
+     
+     @Override
+     public void onServiceDisconnected(ComponentName componentName) {
+     
+     Log.e(TAG,"onServiceDisconnected");
+     myAIDL = null;
+     
+     }};
 
 {% endhighlight %}
 
