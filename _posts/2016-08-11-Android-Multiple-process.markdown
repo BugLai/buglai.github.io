@@ -234,7 +234,7 @@ private static String getProcessName(Context context, int pid) {
 
 ### 7.3 利用AIDL进行数据通信
 
-     接下来我们利用AIDL的一个简单例子进行讲解怎么通过它进行多进程通信，首先在工程中创建MyAIDL的aidl文件，并定义了 multiprocessMethod 方法，然后创建一个在新的进程 :remote 中的 AIDLRemoteService 类，并在类中实例化MyAIDL,然后我们在MainActivity中实例化 AIDLRemoteService 中实例化 MyAIDL 接口，然后在通信的时候直接调用 myAIDL.multiprocessMethod(); 就可以实现数据的通信
+     aidl是 Android Interface definition language的缩写，它是一种 android 内部进程通信接口的描述语言，通过它我们可以定义进程间的通信接口.接下来我们利用AIDL的一个简单例子进行讲解怎么通过它进行多进程通信，首先在工程中创建MyAIDL的aidl文件，并定义了 multiprocessMethod 方法，然后创建一个在新的进程 :remote 中的 AIDLRemoteService 类，并在类中实例化MyAIDL,然后我们在MainActivity中实例化 AIDLRemoteService 中实例化 MyAIDL 接口，然后在通信的时候直接调用 myAIDL.multiprocessMethod(); 就可以实现数据的通信
 
  
 
@@ -271,10 +271,14 @@ private static String getProcessName(Context context, int pid) {
     
     private MyAIDL myAIDL;
     private ServiceConnection serviceConnection = new ServiceConnection() {
+    
     @Override
     public void onServiceConnected(ComponentName componentName, IBinder iBinder)  {
     Log.e(TAG,"onServiceConnected");
-    myAIDL = MyAIDL.Stub.asInterface(iBinder);}      @Override     public void onServiceDisconnected(ComponentName componentName) {          Log.e(TAG,"onServiceDisconnected");         myAIDL = null;      }};
+    
+    myAIDL = MyAIDL.Stub.asInterface(iBinder);} 
+     @Override     public void onServiceDisconnected(ComponentName componentName) {          Log.e(TAG,"onServiceDisconnected");         myAIDL = null;
+              }};
 
 {% endhighlight %}
 
