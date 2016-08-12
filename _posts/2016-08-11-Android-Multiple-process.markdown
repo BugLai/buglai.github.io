@@ -194,11 +194,17 @@ private static String getProcessName(Context context, int pid) {
     (2)线程同步机制失效 
     (3)SharePreferences的可靠性下降
     (4)Application多次创建
-
+    (5)断点调试（调试跟踪程序运行过程的堆栈信息，不同进程有自己的资源内存空间，所以堆栈信息也是独立的，所以不能在进程间进行调试，想调试可以先去掉 android:process 属性）
+    (6)Activity管理（通常我们为了完全退出一个应用，会在Application里面实现ActivityLifecycleCallbacks接口，监听Activity的生命周期，在多进程的情况下每个进程都会跑一次，这样就不能实现应用的完全退出）
 
 ## 7.跨进程通信
 
-         跨进程通信其实是有很方法实现的，比如通过Demo测试在Intent中传递数据给另一个进程的组件，是可以实现的。在确保不会出现并发情况下使用SharePrefrences也可以，还能基于Binder的Messenger和AIDL以及Socket等。这里举一个最简单的例子测试一下，我们通过Intent中附加extras从主进程中MainActivity组件传递信息给另一个进程的MainService，通过下面输出的日志可以看出通过Intent是可以进行进程间通信的。
+     跨进程通信其实是有很方法实现的，比如通过Demo测试在Intent中传递数据给另一个进程的组件，是可以实现的。在确保不会出现并发情况下使用SharePreferences也可以，还能基于Binder的Messenger和AIDL以及Socket等。这里举一些最简单的例子介绍一下
+
+
+    
+### 7.1 Intent通信
+     Intent中附加extras从主进程中MainActivity组件传递信息给另一个进程的MainService，通过下面输出的日志可以看出通过Intent是可以进行进程间通信的
 
 {% highlight ruby %}
 
@@ -219,10 +225,16 @@ private static String getProcessName(Context context, int pid) {
 08-11 22:02:05.522 19681-19681/com.android.multiprocess:mainService I/MultiProcessTest: MainService is onStartCommand:I AM FROM MainActivity
 {% endhighlight %}
 
-  
+### 7.2 SharePreferences共享数据
 
+     通过前面我们知道多个进程对同一个sharedpreference进行修改，总会有一个进程获取到的结果不是实时修改后的结果。那么我们可以通过以下方式解决这种问题。
 
+     1、首先要将获取SharedPreference的MODE设置为： MODE_MULTI_PROCESS （Android2.3后有该属性）。通过 getSharedPreferences("multi", MODE_MULTI_PROCESS);如果是使用MODE_PRIVATE这种模式，那么另一个进程中写入的值，将不会写到文件中。 
+     2、为了保证修改数据实时提交到磁盘，不要将SharedPreference设置成成员变量，尽量在哪里修改就在哪里直接获取SharedPreference。  
+       
+ 
 
+### 7.3 利用AIDL进行数据通信
 
   
 
