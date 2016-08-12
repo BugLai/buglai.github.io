@@ -111,8 +111,8 @@ public class MainActivity extends Activity {
 08-11 17:18:39.006 5286-5286/com.android.multiprocess:MultiProcess I/MultiProcessTest: MainActivity is created:false
 {% endhighlight %}
 
-从上面运行过程中看，我们在启动MainActivity（com.android.multiprocess进程）中的onCreate方法中设置一个布尔变量为true，顺便启动一个添加了process属性的MainService服务（com.android.multiprocess:MultiProcess进程），并在服务启动起来后打印MainActivity的这个变量，发现变量还是为默认值，在不设置process属性时却是改变了，这是因为系统为每个进程都分配了一个独立的虚拟机，不同虚拟机的内存分配上有不同的地址空间，这就导致在不同的虚拟机中访问同一个类的对象会产生对份副本
-
+    从上面运行过程中看，我们在启动MainActivity（com.android.multiprocess进程）中的onCreate方法中设置一个布尔变量为true，顺便启动一个添加了process属性的MainService服务（com.android.multiprocess:MultiProcess进程），并在服务启动起来后打印MainActivity的这个变量，发现变量还是为默认值，在不设置process属性时却是改变了，这是因为系统为每个进程都分配了一个独立的虚拟机，不同虚拟机的内存分配上有不同的地址空间，这就导致在不同的虚拟机中访问同一个类的对象会产生对份副本    
+   
 
 ## 4.多进程的创建顺序
     
@@ -198,9 +198,7 @@ private static String getProcessName(Context context, int pid) {
 
 ## 7.跨进程通信
 
-         跨进程通信其实是有很方法实现的，比如通过Demo测试在Intent中传递数据给另一个进程的组件，是可以实现的。在确保不会出现并发情况下使用SharePrefrences也可以，还能基于
-Binder的Messenger和AIDL以及Socket等。这里举一个最简单的例子测试一下，我们通过Intent中附加extras从主进程中MainActivity组件传递信息给另一个进程的MainService，通过下面
-输出的日志可以看出通过Intent是可以进行进程间通信的。
+         跨进程通信其实是有很方法实现的，比如通过Demo测试在Intent中传递数据给另一个进程的组件，是可以实现的。在确保不会出现并发情况下使用SharePrefrences也可以，还能基于Binder的Messenger和AIDL以及Socket等。这里举一个最简单的例子测试一下，我们通过Intent中附加extras从主进程中MainActivity组件传递信息给另一个进程的MainService，通过下面输出的日志可以看出通过Intent是可以进行进程间通信的。
 
 {% highlight ruby %}
 
@@ -217,8 +215,7 @@ Binder的Messenger和AIDL以及Socket等。这里举一个最简单的例子测�
         Log.i(TAG,"MainService is onStartCommand:"+value);
         return START_STICKY;
     }
-
-
+    s
 08-11 22:02:05.522 19681-19681/com.android.multiprocess:mainService I/MultiProcessTest: MainService is onStartCommand:I AM FROM MainActivity
 {% endhighlight %}
 
